@@ -7,4 +7,6 @@ This is a part of the http://github.com/bridgeconn/vachan-engine project.
 
 clone this repo
 
-and run the _aligner_GUI.py_ python script
+and run the _aligner_GUI.py_ python script.
+
+It requires additional tools efmaral, fastalign and mGIZA at path AutoAligner/AlignmentTools
