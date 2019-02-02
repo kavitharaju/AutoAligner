@@ -70,11 +70,11 @@ def write_alignment(srctablename,trgtablename,alignmnenttablename,pickle_file):
 				if src_pos==255:
 					src_word = None
 				else:
-					src_word = src_words[src_pos]
+					src_word = src_words[src_pos][0]
 				if trg_pos == 255:
 					trg_strongs = None
 				else:
-					trg_strongs = trg_words[trg_pos]
+					trg_strongs = trg_words[trg_pos][0]
 				cur.execute(insert_pos_pair_query,(src_lid,trg_lid,src_pos,trg_pos,src_word,trg_strongs))
 			except Exception as e:
 				print('src_lid:'+str(src_lid))
@@ -87,6 +87,7 @@ def write_alignment(srctablename,trgtablename,alignmnenttablename,pickle_file):
 				
 
 				raise e
+		# break
 	db.commit()
 
 
@@ -105,7 +106,7 @@ if __name__ == '__main__':
 		trgtablename = cmd_line_params[3]
 
 		tablename = cmd_line_params[4]
-		tablename = tablename+"_test"
+		# tablename = tablename+"_test"
 		pickle_file = cmd_line_params[5]
 		write_alignment(srctablename,trgtablename, tablename,pickle_file)
 	else:

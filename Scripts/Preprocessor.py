@@ -58,8 +58,8 @@ class Preprocessor:
 					bracket = bracket_match.group(0)
 					line = line.replace(bracket," ")
 
-				for pun in punct:
-					line = line.replace(pun," ")
+				# for pun in punct:
+				# 	line = line.replace(pun," ")
 
 				line = re.split("\s+",line.strip())
 
@@ -319,7 +319,7 @@ if __name__ == '__main__':
 					sys.exit(1)
 
 		if lang=="grk" and stem_flag==True:
-			print("Using strongs instead of Greek words. So need to stem further!!!")
+			print("Using strongs instead of Greek words. So no need to stem further!!!")
 			stem_flag=False
 		if status_flag == True:
 			lang_obj.get_stats()

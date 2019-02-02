@@ -9,7 +9,7 @@ from Names_occurences import names_ref_list
 
 langs = ['asm','eng','ben','guj','grk','heb','hin','kan','mal','mar','odi','pun','tam','tel','urd']
 
-def call_bash_script(src,src_inp,trg,trg_inp,out_table,sw,stm,ne,tool,tw,prn):
+def call_bash_script(src,src_inp,trg,trg_inp,out_table,sw,stm,ne,tool,tw,prn,NT):
 	inpt = str(src.get())+' - '+str(trg.get())+' - '+str(sw.get())+' - '+str(stm.get())+' - '+str(ne.get())+' - '+str(tool.get())+' - '+str(tw.get())+' - '+str(prn.get())+' - '+str(src_inp.get())+' - '+str(trg_inp.get())
 	if src.get() == '--select--' or src_inp.get()=='' or trg.get()=='--select--' or trg_inp.get()=='' or tool.get()==0 or out_table.get()=='':
 		messagebox.showwarning("Missing Info", 'Source, Source table, Target, Target table, one tool and Output table are mandatory')
@@ -32,7 +32,9 @@ def call_bash_script(src,src_inp,trg,trg_inp,out_table,sw,stm,ne,tool,tw,prn):
 	if tw.get():
 		command += '-tw '
 	if prn.get():
-		command += '-prn'
+		command += '-prn '
+	if NT.get():
+		command += '-NT '
 	args = shlex.split(command)
 	failed = subprocess.check_call([ 'bash']+ args)
 	if failed:
@@ -201,6 +203,8 @@ def launch_gui():
 	trg_list.config(width=10)
 	trg_list.grid(row=1,column=2)
 
+	NT_only = IntVar()
+	Checkbutton(lang_frame, text='NT only', variable=NT_only).grid(row=0, column=3,sticky=E)
 
 
 
@@ -258,7 +262,7 @@ def launch_gui():
 	out_table = StringVar(m)
 	Entry(action_frame,textvariable=out_table).grid(row=0,column=1)
 
-	button = Button(action_frame, text='Align', command=lambda: call_bash_script(defaultSrc,srctable,defaultTrg,trgtable,out_table,prepro1,prepro2,prepro3,tool,postpro1,postpro2))
+	button = Button(action_frame, text='Align', command=lambda: call_bash_script(defaultSrc,srctable,defaultTrg,trgtable,out_table,prepro1,prepro2,prepro3,tool,postpro1,postpro2,NT_only))
 	button.grid(row=2,columnspan=2,pady=10)
 
 

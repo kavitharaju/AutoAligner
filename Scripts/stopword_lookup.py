@@ -24,5 +24,7 @@ urd_stopwords = []
 
 grk_stopwords = []
 
+heb_stopwords = []
+
 eng_stopwords = ["is", "was", "were", "am", ]
 

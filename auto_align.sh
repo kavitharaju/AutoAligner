@@ -48,7 +48,9 @@ efmaral=''
 fastalign=''
 translationwords=''
 pronouns=''
+NT=''
 
+echo "$@"
 
 for param in "$@"
 do 
@@ -76,6 +78,12 @@ if [ $param = "-prn" ]
 then
 pronouns="-prn"
 fi 
+
+if [ $param = "-NT" ]
+then
+NT="-NT"
+fi 
+
 
 if [ $param = "-giza" ]
 then
@@ -142,7 +150,8 @@ cd ../../Scripts
 
 python tranlate_giza_out_to_positionalpair.py ../Resources/$src.$trg.giza_sym.align
 
-python3 Postprocessor.py $src $trg $translationwords $pronouns -o ../Models/$src.$trg.$stopword.$stemming.$namedentity.giza.$translationwords.$pronouns.pkl
+python3 Postprocessor.py $src $trg $translationwords $pronouns $NT -o ../Models/$src.$trg.$stopword.$stemming.$namedentity.giza.$translationwords.$pronouns.pkl
+
 
 python3 DB_manipulations.py write $srctable $trgtable $outputtable ../Models/$src.$trg.$stopword.$stemming.$namedentity.giza.$translationwords.$pronouns.pkl 
 cd ..
@@ -173,7 +182,7 @@ cd ../Scripts
 python3 translate_FAoutput_to_pospairs.py ../Resources/sym.align.ef
 
 
-python3 Postprocessor.py $src $trg $translationwords $pronouns -o ../Models/$src.$trg.$stopword.$stemming.$namedentity.efmaral.$translationwords.$pronouns.pkl
+python3 Postprocessor.py $src $trg $translationwords $pronouns $NT -o ../Models/$src.$trg.$stopword.$stemming.$namedentity.efmaral.$translationwords.$pronouns.pkl
 
 python3 DB_manipulations.py write $srctable $trgtable $outputtable ../Models/$src.$trg.$stopword.$stemming.$namedentity.efmaral.$translationwords.$pronouns.pkl 
 cd ..
@@ -198,7 +207,7 @@ cd ..
 cd Scripts
 python3 translate_FAoutput_to_pospairs.py ../Resources/sym.align.fa
 
-python3 Postprocessor.py $src $trg $translationwords $pronouns -o ../Models/$src.$trg.$stopword.$stemming.$namedentity.fastalign.$translationwords.$pronouns.pkl
+python3 Postprocessor.py $src $trg $translationwords $pronouns $NT -o ../Models/$src.$trg.$stopword.$stemming.$namedentity.fastalign.$translationwords.$pronouns.pkl
 
 python3 DB_manipulations.py write $srctable $trgtable $outputtable ../Models/$src.$trg.$stopword.$stemming.$namedentity.fastalign.$translationwords.$pronouns.pkl 
 cd ..

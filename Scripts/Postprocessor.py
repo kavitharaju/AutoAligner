@@ -44,16 +44,18 @@ if len(cmd_line_params) >= 3:
 	trg_prn = getattr(__import__(package3, fromlist=[name30]), name30)
 
 	
-	
 else:
-	print("Usage: python3 Postprocessor src trg [-tw] [-prn]\n "+
+	print("Usage: python3 Postprocessor src trg [-tw] [-prn] [-NT]\n "+
 				"src and trg takes 3 letter language codes like grk, hin, etc.\n"+
 				"specify if translation words or pronoun look up is to be used.\n"+
-				"Default values are False\n")
+				"Default values are False\n"+
+				"If the alignement is only for NT, specify that also, so that lids can be started from 23146\n")
 	sys.exit(1)
 
 tw_flag = False
 prn_flag = False
+NT = False
+
 output_pickle_file_name = '../Models/'+src_lang+"_"+trg_lang+"_pos_pairs.pkl"
 
 
@@ -64,6 +66,8 @@ if len(cmd_line_params)>3:
 			tw_flag = True
 		elif val == "-prn":
 			prn_flag = True
+		elif val == "-NT":
+			NT = True
 		elif val == "-h" or val == "-help":
 			print("Usage: python3 Postprocessor src trg [-tw] [-prn]\n "+
 				"src and trg takes 3 letter language codes like grk, hin, etc.\n"+
@@ -391,7 +395,10 @@ if tw_flag == True or prn_flag == True:
 
 temp = final_complete_pos_pairs
 final_complete_pos_pairs = []
-lid = 23146
+if NT:
+	lid = 23146
+else:
+	lid = 1
 for row in temp:
 	final_complete_pos_pairs.append([lid,lid,row,"False"])
 	lid=lid+1

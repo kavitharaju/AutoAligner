@@ -36,3 +36,5 @@ tel_pronouns = []
 
 urd_pronouns = []
 
+heb_pronouns = []
+
