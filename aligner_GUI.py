@@ -7,7 +7,7 @@ sys.path.append('./Scripts')
 from Names_occurences import names_ref_list
 
 
-langs = ['asm','eng','ben','guj','grk','hin','kan','mal','mar','odi','pun','tam','tel','urd']
+langs = ['asm','eng','ben','guj','grk','heb','hin','kan','mal','mar','odi','pun','tam','tel','urd']
 
 def call_bash_script(src,src_inp,trg,trg_inp,out_table,sw,stm,ne,tool,tw,prn):
 	inpt = str(src.get())+' - '+str(trg.get())+' - '+str(sw.get())+' - '+str(stm.get())+' - '+str(ne.get())+' - '+str(tool.get())+' - '+str(tw.get())+' - '+str(prn.get())+' - '+str(src_inp.get())+' - '+str(trg_inp.get())
@@ -18,7 +18,7 @@ def call_bash_script(src,src_inp,trg,trg_inp,out_table,sw,stm,ne,tool,tw,prn):
 	command = './auto_align.sh '+src.get()+' '+src_inp.get()+' '+trg.get()+' '+trg_inp.get()+' '+out_table.get()+' '
 
 	if sw.get() :
-		command += '- sw '
+		command += '-sw '
 	if stm.get():
 		command += '-stm '
 	if ne.get():
@@ -75,7 +75,7 @@ def reload_stopwords():
 	outfile = codecs.open('Scripts/stopword_lookup.py',mode='w',encoding='utf8')
 
 
-	col_list = ["asm_stopwords","ben_stopwords","guj_stopwords","hin_stopwords","kan_stopwords","mal_stopwords","mar_stopwords","pun_stopwords","odi_stopwords","tam_stopwords","tel_stopwords","urd_stopwords","grk_stopwords","eng_stopwords"]
+	col_list = ["asm_stopwords","ben_stopwords","guj_stopwords","hin_stopwords","kan_stopwords","mal_stopwords","mar_stopwords","pun_stopwords","odi_stopwords","tam_stopwords","tel_stopwords","urd_stopwords","grk_stopwords","heb_stopwords","eng_stopwords"]
 
 	for index,col in enumerate(col_list):
 		outfile.write(col+" = [")
@@ -97,7 +97,7 @@ def reload_names():
 	outfile = codecs.open('Scripts/name_lookup.py',mode='w',encoding='utf8')
 
 
-	col_list = ["grk_names", "eng_names", "ref_names", "asm_names", "ben_names", "guj_names", "kan_names", "mal_names", "hin_names", "mar_names", "pun_names", "odi_names", "tam_names", "tel_names", "urd_names"]
+	col_list = ["grk_names", "eng_names", "ref_names", "asm_names", "ben_names", "guj_names", "kan_names", "mal_names", "hin_names", "mar_names", "pun_names", "odi_names", "tam_names", "tel_names", "urd_names","heb_names"]
 
 	for index,col in enumerate(col_list):
 		outfile.write(col+" = [")
@@ -119,7 +119,7 @@ def reload_tws():
 	outfile = codecs.open('Scripts/tw_lookup.py',mode='w',encoding='utf8')
 
 
-	col_list = ["grk_tws", "eng_tws", "asm_tws", "ben_tws", "guj_tws", "hin_tws", "kan_tws", "mal_tws", "mar_tws", "pun_tws", "odi_tws", "tam_tws", "tel_tws", "urd_tws"]
+	col_list = ["grk_tws", "eng_tws", "asm_tws", "ben_tws", "guj_tws", "hin_tws", "kan_tws", "mal_tws", "mar_tws", "pun_tws", "odi_tws", "tam_tws", "tel_tws", "urd_tws","heb_tws"]
 
 	for index,col in enumerate(col_list):
 		outfile.write(col+" = [")
@@ -141,7 +141,7 @@ def reload_pronouns():
 	outfile = codecs.open('Scripts/pronoun_lookup.py',mode='w',encoding='utf8')
 
 
-	col_list = ["grk_pronouns", "eng_pronouns", "asm_pronouns", "ben_pronouns", "guj_pronouns", "hin_pronouns", "kan_pronouns", "mal_pronouns", "mar_pronouns", "pun_pronouns", "odi_pronouns", "tam_pronouns", "tel_pronouns", "urd_pronouns"]
+	col_list = ["grk_pronouns", "eng_pronouns", "asm_pronouns", "ben_pronouns", "guj_pronouns", "hin_pronouns", "kan_pronouns", "mal_pronouns", "mar_pronouns", "pun_pronouns", "odi_pronouns", "tam_pronouns", "tel_pronouns", "urd_pronouns","heb_pronouns"]
 
 	for index,col in enumerate(col_list):
 		outfile.write(col+" = [")
