@@ -136,6 +136,11 @@ while verse_counter_src<len(preprocessed_src) and verse_counter_trg< len(preproc
 	src = preprocessed_src[verse_counter_src]
 	trg = preprocessed_trg[verse_counter_trg]
 	alignments = partial_pos_pairs[verse_counter_alignment]	
+	# if(verse_counter_trg==59):
+	# 	print('trg:',trg)
+	# 	print('src:',src)
+	# 	break
+
 	print(".",end='')
 
 	original_src = [x[0] for x in src]
@@ -203,6 +208,7 @@ while verse_counter_src<len(preprocessed_src) and verse_counter_trg< len(preproc
 
 	#case:the line given to aligner was empty and was omitted while aligning
 	if  "".join(used_src)=="" or "".join(used_trg)=="":
+		print('Empty line at verse_counter_src:',verse_counter_src)
 		verse_counter_alignment=verse_counter_alignment-1
 	else:
 
@@ -250,17 +256,18 @@ while verse_counter_src<len(preprocessed_src) and verse_counter_trg< len(preproc
 
 				
 			except Exception as e:
-				print(e)
-				print("verse_counter_src:"+str(verse_counter_src))
-				print ("at verse: "+' '.join(original_src))
-				print ("at verse: "+' '.join(original_trg))
-				print ("at verse: "+' '.join(used_src))
-				print(used_trg)
-				print(used_src_pos,used_trg_pos)
-				print(alignments)
-				error_count=error_count+1
-				print("Erro count:"+str(error_count))
-				raise e
+					print('verse_counter_alignment, when error:',verse_counter_alignment)
+					# print(e)
+					print("verse_counter_src:"+str(verse_counter_src))
+					print ("at verse: "+' '.join(original_src))
+					print ("at verse: "+' '.join(original_trg))
+					print ("at verse: "+' '.join(used_src))
+					print(used_trg)
+					print(used_src_pos,used_trg_pos)
+					print(alignments)
+					error_count=error_count+1
+					print("Erro count:"+str(error_count))
+					raise e
 
 	complete_pos_pairs.append(new_alignments)
 	verse_counter_alignment+=1

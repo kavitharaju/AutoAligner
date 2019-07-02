@@ -75,7 +75,7 @@ def write_alignment(srctablename,trgtablename,alignmnenttablename,pickle_file):
 					trg_strongs = None
 				else:
 					trg_strongs = trg_words[trg_pos][0]
-				cur.execute(insert_pos_pair_query,(src_lid,trg_lid,src_pos,trg_pos,src_word,trg_strongs))
+				cur.execute(insert_pos_pair_query,(src_lid,trg_lid,src_pos+1,trg_pos+1,src_word,trg_strongs))
 			except Exception as e:
 				print('src_lid:'+str(src_lid))
 				print('trg_lid:'+str(trg_lid))
