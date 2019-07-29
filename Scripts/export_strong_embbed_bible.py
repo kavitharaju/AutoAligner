@@ -1,14 +1,14 @@
 import pymysql,codecs,sys
 
-host="localhost"    # your host, usually localhost
-user="root"         # your username
-password="password"  # your password
-database="AutographaMT_Staging"
+# host="localhost"    # your host, usually localhost
+# user="root"         # your username
+# password="password"  # your password
+# database="AutographaMT_Staging"
 
-# host="159.89.167.64"    # your host, usually localhost
-# user="test_user"         # your username
-# password="staging&2414"  # your password
-# database="AutographaMTStaging"
+host="159.89.167.64"    # your host, usually localhost
+user="test_user"         # your username
+password="staging&2414"  # your password
+database="AutographaMTStaging"
 
 
 query = '''select map.Book, map.Chapter, map.Verse, wrd.Lid, wrd.Position, wrd.Word, align.LidTrg, align.PositionTrg, align.Strongs 
@@ -64,7 +64,7 @@ def export(conn,word_table,alignment_table):
 			prev_Book = Book
 			prev_Chapter = Chapter
 			prev_verse = Verse
-			verse_buffer = []
+			verse_buffer = [(WordSrc,Strongs)]
 		next_row = cur.fetchone()
 	# file.close()
 	return output_string
