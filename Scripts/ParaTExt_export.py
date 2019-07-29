@@ -1,10 +1,14 @@
 import pymysql,codecs
 
-host="localhost"    # your host, usually localhost
-user="root"         # your username
-password="password"  # your password
-database="AutographaMT_Staging"
+# host="localhost"    # your host, usually localhost
+# user="root"         # your username
+# password="password"  # your password
+# database="AutographaMT_Staging"
 
+host="159.89.167.64"    # your host, usually localhost
+user="test_user"         # your username
+password="staging&2414"  # your password
+database="AutographaMTStaging"
 
 
 
@@ -29,12 +33,15 @@ xml_content_template = '''  <Mapping Reference="{}" Warning="false" Verified="fa
 
     <TargetLinks>
 
-      <TargetLink>{}</TargetLink>
+      {}
 
     </TargetLinks>
 
   </Mapping>
 '''
+
+one_target_template = '''<TargetLink>{}</TargetLink>
+      '''
 
 def export(conn,table):
 	cur = conn.cursor()
@@ -44,9 +51,11 @@ def export(conn,table):
 
 	next_row = cur.fetchone()
 	prev_lid = None
+	prev_PositionSrc = None
 
 
 	output_string = xml_header
+	output_string_list = []
 	verse_buffer = []
 	while(next_row):
 		LidSrc = next_row[3]
@@ -73,20 +82,34 @@ def export(conn,table):
 			for w in verse_buffer:
 				if w==WordSrc:
 					index += 1
-			verse_buffer.append(WordSrc)
+			if PositionSrc != prev_PositionSrc:
+				verse_buffer.append(WordSrc)
+
+		if not PositionTrg:
+			next_row = cur.fetchone()
+			continue
 
 		Reference=str(Book).zfill(3)+str(Chapter).zfill(3)+str(Verse).zfill(3)+"00"
 		Word=str(WordSrc)
 		Strong="G"+str(Strongs).zfill(4)
 		Index=str(index)
 		TargetLink=str(Book).zfill(3)+str(Chapter).zfill(3)+str(Verse).zfill(3)+"00"+str(PositionTrg*2).zfill(3)
+		if PositionSrc != prev_PositionSrc or LidSrc != prev_lid:
+			prev_PositionSrc = PositionSrc
+			target_string = ''
+		else:
+			output_string_list = output_string_list[:-1]
+		
+		target_string += one_target_template.format(TargetLink)
+		filled_template = xml_content_template.format(Reference,Word,Strong,Index,target_string)
 
-		filled_template = xml_content_template.format(Reference,Word,Strong,Index,TargetLink)
+		output_string_list.append(filled_template)
 
-		output_string += filled_template
 
 		next_row = cur.fetchone()
 		# break
+	for strng in output_string_list:
+		output_string += strng 
 	output_string += xml_footer
 	cur.close()
 	return output_string
@@ -99,7 +122,7 @@ if __name__ == '__main__':
 		                     password=password, 
 		                     database=database,
 		                     charset='utf8mb4')
-	tablename = "Tel_5_Grk_UGNT4_Alignment"
+	tablename = "Mal_4_Grk_UGNT4_Alignment"
 	output_string = export(db,tablename)
 
 	db.close()
